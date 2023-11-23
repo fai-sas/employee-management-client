@@ -1,27 +1,56 @@
 /* eslint-disable no-unused-vars */
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useContext } from 'react'
+import 'react-toastify/dist/ReactToastify.css'
+import { AuthContext } from '../Providers/AuthProvider'
+import { Helmet } from 'react-helmet-async'
+import useAxiosPublic from '../Hooks/useAxiosPublic'
+import Swal from 'sweetalert2'
+import { useForm } from 'react-hook-form'
 
 const Register = () => {
-  const handleRegister = (e) => {
-    e.preventDefault()
+  const axiosPublic = useAxiosPublic()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm()
+  const { createUserWithEmail, updateUserProfile, logOut } =
+    useContext(AuthContext)
+  const navigate = useNavigate()
 
-    const name = e.target.name.value
-    const role = e.target.role.value
-    const email = e.target.email.value
-    const password = e.target.password.value
-
-    console.log(name, role, email, password)
-
-    if (password.length < 6) {
-      toast.error('Password should be at least 6 characters or longer')
-      return
-    } else if (!/(?=.*[A-Z])(?=.*[@#$%^&+=!])/.test(password)) {
-      toast.error(
-        'Password should have at least one upper case and one special character.'
-      )
-      return
-    }
+  const onSubmit = (data) => {
+    createUserWithEmail(data.email, data.password).then((result) => {
+      const loggedUser = result.user
+      console.log(loggedUser)
+      updateUserProfile(data.name, data.photoURL)
+        .then(() => {
+          // create user entry in the database
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+            role: data.role,
+          }
+          axiosPublic.post('/users', userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log('user added to the database')
+              reset()
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'User created successfully.',
+                showConfirmButton: false,
+                timer: 1500,
+              })
+              logOut()
+              navigate('/')
+            }
+          })
+        })
+        .catch((error) => console.log(error))
+    })
   }
 
   return (
@@ -77,7 +106,7 @@ const Register = () => {
         <div className='w-full max-w-md px-4 space-y-8 text-gray-600 bg-white sm:px-0'>
           <div className=''>
             <img
-              src='https://floatui.com/logo.svg'
+              src='https://i.ibb.co/sFsCmwx/jobsy-logo.png'
               width={150}
               className='lg:hidden'
             />
@@ -136,12 +165,13 @@ const Register = () => {
               Or continue with
             </p>
           </div>
-          <form onSubmit={handleRegister} className='space-y-5'>
+          <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
             <div>
               <label className='font-medium'>Name</label>
               <input
                 name='name'
                 type='text'
+                {...register('name', { required: true })}
                 required
                 className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'
               />
@@ -152,6 +182,8 @@ const Register = () => {
               </label>
               <select
                 required
+                type='text'
+                {...register('role', { required: true })}
                 className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'
                 name='role'
                 id='role'
@@ -165,6 +197,7 @@ const Register = () => {
               <label className='font-medium'>Email</label>
               <input
                 type='email'
+                {...register('email', { required: true })}
                 name='email'
                 required
                 className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'
@@ -174,6 +207,7 @@ const Register = () => {
               <label className='font-medium'>Password</label>
               <input
                 type='password'
+                {...register('password', { required: true })}
                 name='password'
                 required
                 className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'

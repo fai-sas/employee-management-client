@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider()
   const axiosPublic = useAxiosPublic()
 
-  const createUser = (email, password) => {
+  const createUserWithEmail = (email, password) => {
     setLoading(true)
     return createUserWithEmailAndPassword(auth, email, password)
   }
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     loading,
-    createUser,
+    createUserWithEmail,
     signInWithEmailPassword,
     googleSignIn,
     logOut,
