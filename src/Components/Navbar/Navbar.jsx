@@ -14,6 +14,7 @@ const Navbar = () => {
     { title: 'Contact Us', path: '/' },
     { title: 'Support', path: '/' },
     { title: 'Login', path: '/' },
+    { title: 'Register', path: '/register' },
   ]
 
   const handleScroll = () => {
