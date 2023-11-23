@@ -3,8 +3,11 @@
 /* eslint-disable no-unused-vars */
 import { useState, useRef, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import useAuth from '../../Hooks/useAuth'
+import { toast } from 'react-toastify'
 
 const AvatarMenu = () => {
+  const { user, logOut } = useAuth()
   const [state, setState] = useState(false)
   const profileRef = useRef()
 
@@ -14,6 +17,12 @@ const AvatarMenu = () => {
     { title: 'Profile', path: '/' },
     { title: 'Settings', path: '/' },
   ]
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => toast.success(`${user?.displayName} Logged Out Successfully`))
+      .catch((error) => console.error(error))
+  }
 
   useEffect(() => {
     const handleDropDown = (e) => {
@@ -31,7 +40,8 @@ const AvatarMenu = () => {
           onClick={() => setState(!state)}
         >
           <img
-            src='https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg'
+            // src='https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg'
+            src={user?.displayURL}
             className='w-full h-full rounded-full'
           />
         </button>
@@ -51,7 +61,10 @@ const AvatarMenu = () => {
             </NavLink>
           </li>
         ))}
-        <button className='block w-full py-3 text-justify text-gray-600 border-t hover:text-gray-900 lg:hover:bg-gray-50 lg:p-3'>
+        <button
+          onClick={handleLogOut}
+          className='block w-full py-3 text-justify text-gray-600 border-t hover:text-gray-900 lg:hover:bg-gray-50 lg:p-3'
+        >
           Logout
         </button>
       </ul>
