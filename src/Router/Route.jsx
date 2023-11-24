@@ -4,6 +4,10 @@ import MainLayout from '../layout/MainLayout'
 import HomePage from '../Pages/HomePage'
 import Register from '../Pages/Register'
 import Login from '../Pages/Login'
+import PrivateRoute from '../Router/PrivateRoute'
+import Dashboard from '../Layout/DashboardLayout'
+import AllUsers from '../Pages/Dashboard/AllUsers'
+import AdminRoute from './AdminRoute'
 
 const Route = createBrowserRouter([
   {
@@ -14,6 +18,25 @@ const Route = createBrowserRouter([
       {
         path: '/',
         element: <HomePage />,
+      },
+    ],
+  },
+  {
+    path: '/dashboard',
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: '/dashboard/all-users',
+        index: true,
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
       },
     ],
   },

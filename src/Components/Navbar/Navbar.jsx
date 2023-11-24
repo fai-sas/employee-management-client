@@ -12,7 +12,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
 
   const navigation = [
-    { title: 'Dashboard', path: '/' },
+    { title: 'Dashboard', path: '/dashboard' },
     { title: 'Contact Us', path: '/' },
     { title: 'Support', path: '/' },
     !user && { title: 'Login', path: '/login' },
