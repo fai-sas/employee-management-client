@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 
+import TableEmployeeList from '../../Components/Table/HR/TableEmployeeList'
 import useGetAllEmployees from '../../Hooks/useGetAllEmployees'
 
 const EmployeeList = () => {
@@ -14,16 +15,7 @@ const EmployeeList = () => {
   return (
     <>
       <h1>Get All Users</h1>
-      <div>
-        {employees.map((employee) => {
-          return (
-            <div key={employee?._id}>
-              <h1>User Length: {employees.length}</h1>
-              <h1>Name: {employee?.name}</h1>
-            </div>
-          )
-        })}
-      </div>
+      <TableEmployeeList employees={employees} />
     </>
   )
 }
