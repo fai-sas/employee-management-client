@@ -12,15 +12,15 @@ const AvatarMenu = () => {
   const profileRef = useRef()
 
   const navigation = [
-    { title: 'Dashboard', path: '/' },
-    { title: 'Analytics', path: '/' },
-    { title: 'Profile', path: '/' },
-    { title: 'Settings', path: '/' },
+    // { title: 'Dashboard', path: '/' },
+    // { title: 'Analytics', path: '/' },
+    // { title: 'Profile', path: '/' },
+    // { title: 'Settings', path: '/' },
   ]
 
   const handleLogOut = () => {
     logOut()
-      .then(() => toast.success(`${user?.displayName} Logged Out Successfully`))
+      .then(() => toast.success(`Logged Out Successfully`))
       .catch((error) => console.error(error))
   }
 
@@ -41,7 +41,7 @@ const AvatarMenu = () => {
         >
           <img
             // src='https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg'
-            src={user?.displayURL}
+            src={user?.photoURL}
             className='w-full h-full rounded-full'
           />
         </button>

@@ -4,8 +4,10 @@
 import { useState, useRef, useEffect } from 'react'
 import AvatarMenu from './AvatarMenu'
 import { Link, NavLink } from 'react-router-dom'
+import useAuth from '../../Hooks/useAuth'
 
 const Navbar = () => {
+  const { user } = useAuth()
   const [state, setState] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -13,9 +15,9 @@ const Navbar = () => {
     { title: 'Dashboard', path: '/' },
     { title: 'Contact Us', path: '/' },
     { title: 'Support', path: '/' },
-    { title: 'Login', path: '/login' },
-    { title: 'Register', path: '/register' },
-  ]
+    !user && { title: 'Login', path: '/login' },
+    user && { title: `${user?.displayName}` },
+  ].filter(Boolean)
 
   const handleScroll = () => {
     setIsScrolled(window.scrollY > 100)

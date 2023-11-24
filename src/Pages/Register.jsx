@@ -9,6 +9,9 @@ import useAxiosPublic from '../Hooks/useAxiosPublic'
 import Swal from 'sweetalert2'
 import { useForm } from 'react-hook-form'
 
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+
 const Register = () => {
   const axiosPublic = useAxiosPublic()
   const {
@@ -17,39 +20,70 @@ const Register = () => {
     reset,
     formState: { errors },
   } = useForm()
-  const { createUserWithEmail, updateUserProfile, logOut } =
+  const { createUserWithEmail, updateUserProfile, googleSignIn, logOut } =
     useContext(AuthContext)
   const navigate = useNavigate()
 
-  const onSubmit = (data) => {
-    createUserWithEmail(data.email, data.password).then((result) => {
-      const loggedUser = result.user
-      console.log(loggedUser)
-      updateUserProfile(data.name, data.photoURL)
-        .then(() => {
-          // create user entry in the database
-          const userInfo = {
-            name: data.name,
-            email: data.email,
-            role: data.role,
-          }
-          axiosPublic.post('/users', userInfo).then((res) => {
-            if (res.data.insertedId) {
-              console.log('user added to the database')
-              reset()
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'User created successfully.',
-                showConfirmButton: false,
-                timer: 1500,
-              })
-              logOut()
-              navigate('/')
+  const onSubmit = async (data) => {
+    // image upload to imgbb and then get an url
+    const imageFile = { image: data.image[0] }
+    const res = await axiosPublic.post(image_hosting_api, imageFile, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    })
+
+    console.log(res.data)
+
+    if (res.data.success) {
+      console.log('ImgBB URL:', res.data.data.display_url)
+      createUserWithEmail(data.email, data.password).then((result) => {
+        const loggedUser = result.user
+        console.log('Logged User:', loggedUser)
+        updateUserProfile(data.name, data.photoURL)
+          .then(() => {
+            const userInfo = {
+              name: data.name,
+              designation: data.designation,
+              bank_account_number: data.bank_account_number,
+              salary: data.salary,
+              email: data.email,
+              role: data.role,
+              photoURL: res.data.data.display_url,
             }
+            axiosPublic.post('/users', userInfo).then((res) => {
+              if (res.data.insertedId) {
+                console.log('user added to the database')
+                reset()
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'User created successfully.',
+                  showConfirmButton: false,
+                  timer: 1500,
+                })
+                logOut()
+                navigate('/login')
+              }
+            })
           })
-        })
-        .catch((error) => console.log(error))
+          .catch((error) => console.log(error))
+      })
+    }
+  }
+
+  const handleGoogleSignIn = () => {
+    googleSignIn().then((result) => {
+      console.log(result.user)
+      const userInfo = {
+        email: result.user?.email,
+        name: result.user?.displayName,
+        role: result.user?.role,
+      }
+      axiosPublic.post('/users', userInfo).then((res) => {
+        console.log(res.data)
+        navigate('/')
+      })
     })
   }
 
@@ -126,7 +160,10 @@ const Register = () => {
             </div>
           </div>
           <div className='grid grid-cols-1 gap-x-3'>
-            <button className='flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100'>
+            <button
+              onClick={handleGoogleSignIn}
+              className='flex items-center justify-center py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100'
+            >
               <svg
                 className='w-5 h-5'
                 viewBox='0 0 48 48'
@@ -177,6 +214,47 @@ const Register = () => {
               />
             </div>
             <div>
+              <label className='font-medium'>Designation</label>
+              <input
+                name='designation'
+                type='text'
+                {...register('designation', { required: true })}
+                required
+                className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'
+              />
+            </div>
+            <div>
+              <label className='font-medium'>Bank Account Number</label>
+              <input
+                name='bank_account_number'
+                type='number'
+                {...register('bank_account_number', {
+                  required: true,
+                  maxLength: 16,
+                })}
+                required
+                className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'
+              />
+              {errors.bank_account_number && (
+                <span className='text-red-600'>
+                  Account Number Can Not be More Than 16 Digits
+                </span>
+              )}
+            </div>
+            <div>
+              <label className='font-medium'>Salary</label>
+              <input
+                name='salary'
+                type='number'
+                {...register('salary', {
+                  required: true,
+                  maxLength: 7,
+                })}
+                required
+                className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'
+              />
+            </div>
+            <div>
               <label className='font-medium' htmlFor='role'>
                 Register As
               </label>
@@ -209,6 +287,16 @@ const Register = () => {
                 type='password'
                 {...register('password', { required: true })}
                 name='password'
+                required
+                className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'
+              />
+            </div>
+            <div>
+              <label className='font-medium'>Photo</label>
+              <input
+                type='file'
+                {...register('image', { required: true })}
+                name='image'
                 required
                 className='w-full px-3 py-2 mt-2 text-gray-500 bg-transparent border rounded-lg shadow-sm outline-none focus:border-indigo-600'
               />
