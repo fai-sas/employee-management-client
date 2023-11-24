@@ -8,6 +8,8 @@ import PrivateRoute from '../Router/PrivateRoute'
 import Dashboard from '../Layout/DashboardLayout'
 import AllUsers from '../Pages/Dashboard/AllUsers'
 import AdminRoute from './AdminRoute'
+import EmployeeList from '../Pages/Dashboard/EmployeeList'
+import HrRoute from './HrRoute'
 
 const Route = createBrowserRouter([
   {
@@ -29,13 +31,22 @@ const Route = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      // admin only routes
       {
         path: '/dashboard/all-users',
-        index: true,
         element: (
           <AdminRoute>
             <AllUsers />
           </AdminRoute>
+        ),
+      },
+      // HR only routes
+      {
+        path: '/dashboard/employee-list',
+        element: (
+          <HrRoute>
+            <EmployeeList />
+          </HrRoute>
         ),
       },
     ],

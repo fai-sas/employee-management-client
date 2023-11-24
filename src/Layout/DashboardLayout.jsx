@@ -17,9 +17,11 @@ import {
 
 import { NavLink, Outlet } from 'react-router-dom'
 import useAdmin from '../Hooks/useAdmin'
+import useHR from '../Hooks/useHR'
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin()
+  const [isHR] = useHR()
 
   return (
     <div className='flex'>
@@ -45,7 +47,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </>
-          ) : (
+          ) : isHR ? (
             <>
               <li>
                 <NavLink
@@ -65,8 +67,6 @@ const Dashboard = () => {
                   Employee List
                 </NavLink>
               </li>
-              <li></li>
-
               <li>
                 <NavLink
                   to='/dashboard/progress'
@@ -77,7 +77,8 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </>
-          )}
+          ) : null}
+
           {/* shared nav links */}
           <div className='divider'></div>
           <li>
