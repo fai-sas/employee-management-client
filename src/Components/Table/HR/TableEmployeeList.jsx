@@ -6,6 +6,7 @@ import { TiDelete } from 'react-icons/ti'
 import { FaCheck } from 'react-icons/fa'
 import { useState } from 'react'
 import useGetAllEmployees from '../../../Hooks/useGetAllEmployees'
+import { Link } from 'react-router-dom'
 
 const TableEmployeeList = ({ employees, handleToggleVerification }) => {
   return (
@@ -83,7 +84,13 @@ const TableEmployeeList = ({ employees, handleToggleVerification }) => {
                         {employee?.bank_account_number}
                       </td>
                       <td className='px-6 py-4'>{employee?.salary}</td>
-                      <td className='px-6 py-4'>View Details</td>
+                      <td className='px-6 py-4'>
+                        <Link
+                          to={`/dashboard/employee-list/singleEmployee/${employee?._id}`}
+                        >
+                          View Details
+                        </Link>
+                      </td>
                       <td className='px-6 py-4'>Pay Now</td>
                     </tr>
                   </tbody>

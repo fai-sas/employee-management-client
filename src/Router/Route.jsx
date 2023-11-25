@@ -10,6 +10,7 @@ import AllUsers from '../Pages/Dashboard/AllUsers'
 import AdminRoute from './AdminRoute'
 import EmployeeList from '../Pages/Dashboard/EmployeeList'
 import HrRoute from './HrRoute'
+import SingleEmployee from '../Pages/Dashboard/SingleEmployee'
 
 const Route = createBrowserRouter([
   {
@@ -48,6 +49,16 @@ const Route = createBrowserRouter([
             <EmployeeList />
           </HrRoute>
         ),
+      },
+      {
+        path: '/dashboard/employee-list/singleEmployee/:id',
+        element: (
+          <HrRoute>
+            <SingleEmployee />
+          </HrRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/users/employees/${params.id}`),
       },
     ],
   },
