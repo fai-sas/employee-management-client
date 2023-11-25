@@ -2,28 +2,28 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 
+import TableAdmin from '../../Components/Table/Admin/TableAdmin'
 import useGetUsers from '../../Hooks/useGetUsers'
 
 const AllUsers = () => {
   const [users, loading, refetch] = useGetUsers()
-  console.log(users)
 
   if (loading) {
     return <h1>Loading...</h1>
   }
 
+  const filteredUsers = users.filter(
+    (user) =>
+      user?.role === 'hr' || (user?.role === 'employee' && user?.isVerified)
+  )
+
   return (
     <>
-      <h1>Get All Users</h1>
-      <div>
-        {users.map((user) => {
-          return (
-            <div key={user?._id}>
-              <h1>User Length: {users.length}</h1>
-              <h1>Name: {user?.name}</h1>
-            </div>
-          )
-        })}
+      <h1 className='py-4 text-3xl font-semibold'>
+        List of Verified Employees and HR
+      </h1>
+      <div className=''>
+        <TableAdmin users={filteredUsers} />
       </div>
     </>
   )
