@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 
-const TableAdmin = ({ users }) => {
+const TableAdmin = ({ users, handleMakeHR }) => {
   return (
     <>
       <div className='m-5 overflow-hidden border border-gray-200 rounded-lg shadow-md'>
@@ -43,7 +43,12 @@ const TableAdmin = ({ users }) => {
                       <td className='px-6 py-4'>
                         {user.role === 'employee' ? (
                           <div className='flex flex-wrap justify-center gap-6'>
-                            <button className='relative' href='#'>
+                            <button
+                              onClick={() =>
+                                handleMakeHR(user?._id, user?.role)
+                              }
+                              className='relative'
+                            >
                               <span className='absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-black rounded'></span>
                               <span className='relative inline-block w-full h-full px-3 py-1 text-base font-bold text-black transition duration-100 bg-white border-2 border-black rounded fold-bold hover:bg-yellow-400 hover:text-gray-900 dark:bg-transparent'>
                                 Make HR
