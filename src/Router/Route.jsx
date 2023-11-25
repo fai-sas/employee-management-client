@@ -13,6 +13,7 @@ import HrRoute from './HrRoute'
 import SingleEmployee from '../Pages/Dashboard/SingleEmployee'
 import PaymentHistory from '../Pages/Dashboard/PaymentHistory'
 import WorkSheet from '../Pages/Dashboard/WorkSheet'
+import EmployeeRoute from './EmployeeRoute'
 
 const Route = createBrowserRouter([
   {
@@ -65,11 +66,19 @@ const Route = createBrowserRouter([
       // Employee only routes
       {
         path: '/dashboard/payment-history',
-        element: <PaymentHistory />,
+        element: (
+          <EmployeeRoute>
+            <PaymentHistory />
+          </EmployeeRoute>
+        ),
       },
       {
         path: '/dashboard/work-sheet',
-        element: <WorkSheet />,
+        element: (
+          <EmployeeRoute>
+            <WorkSheet />
+          </EmployeeRoute>
+        ),
       },
     ],
   },
