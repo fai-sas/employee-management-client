@@ -8,7 +8,6 @@ const SingleEmployee = () => {
     <div>
       <h1>SingleEmployee Name : {name}</h1>
       <h1>SingleEmployee Designation : {designation}</h1>
-      <h1>SingleEmployee Designation : {designation}</h1>
       <img src={photoURL} alt={name} />
     </div>
   )

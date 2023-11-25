@@ -77,7 +77,28 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </>
-          ) : null}
+          ) : (
+            <>
+              <li>
+                <NavLink
+                  to='/dashboard/payment-history'
+                  className='flex items-center gap-2'
+                >
+                  <FaList></FaList>
+                  Payment History
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to='/dashboard/work-sheet'
+                  className='flex items-center gap-2'
+                >
+                  <FaList></FaList>
+                  Work Sheet
+                </NavLink>
+              </li>
+            </>
+          )}
 
           {/* shared nav links */}
           <div className='divider'></div>

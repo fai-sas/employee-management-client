@@ -11,6 +11,8 @@ import AdminRoute from './AdminRoute'
 import EmployeeList from '../Pages/Dashboard/EmployeeList'
 import HrRoute from './HrRoute'
 import SingleEmployee from '../Pages/Dashboard/SingleEmployee'
+import PaymentHistory from '../Pages/Dashboard/PaymentHistory'
+import WorkSheet from '../Pages/Dashboard/WorkSheet'
 
 const Route = createBrowserRouter([
   {
@@ -59,6 +61,15 @@ const Route = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/users/employees/${params.id}`),
+      },
+      // Employee only routes
+      {
+        path: '/dashboard/payment-history',
+        element: <PaymentHistory />,
+      },
+      {
+        path: '/dashboard/work-sheet',
+        element: <WorkSheet />,
       },
     ],
   },
