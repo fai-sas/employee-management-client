@@ -4,8 +4,10 @@
 
 import { TiDelete } from 'react-icons/ti'
 import { FaCheck } from 'react-icons/fa'
+import { useState } from 'react'
+import useGetAllEmployees from '../../../Hooks/useGetAllEmployees'
 
-const TableEmployeeList = ({ employees }) => {
+const TableEmployeeList = ({ employees, handleToggleVerification }) => {
   return (
     <>
       <div className='m-5 overflow-hidden border border-gray-200 rounded-lg shadow-md'>
@@ -62,10 +64,20 @@ const TableEmployeeList = ({ employees }) => {
                           <div className='text-gray-400'>{employee?.email}</div>
                         </div>
                       </th>
+
                       <td className='px-6 py-4'>
-                        <span className='inline-flex items-center gap-1 px-2 py-1 font-semibold rounded-full'>
-                          {employee.verified ? <FaCheck /> : <TiDelete />}
-                        </span>
+                        <button
+                          onClick={() =>
+                            handleToggleVerification(
+                              employee?._id,
+                              employee?.isVerified
+                            )
+                          }
+                          className={`inline-flex items-center gap-1 px-2 py-1 font-semibold rounded-full 
+                          }`}
+                        >
+                          {employee.isVerified ? <FaCheck /> : <TiDelete />}
+                        </button>
                       </td>
                       <td className='px-6 py-4'>
                         {employee?.bank_account_number}
