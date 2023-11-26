@@ -15,7 +15,7 @@ const EmployeeList = () => {
   const [employees, setEmployees] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:5000/employees')
+    fetch('https://employee-management-server-liard.vercel.app/employees')
       .then((response) => response.json())
       .then((data) => setEmployees(data))
   }, [])

@@ -32,7 +32,7 @@ const AvatarMenu = () => {
   }, [])
 
   return (
-    <div className='relative border-t lg:border-none'>
+    <div className='relative z-40 border-t lg:border-none'>
       <div className=''>
         <button
           ref={profileRef}

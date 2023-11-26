@@ -13,7 +13,7 @@ const Progress = () => {
   const [selectedMonth, setSelectedMonth] = useState('')
 
   useEffect(() => {
-    fetch('http://localhost:5000/tasks')
+    fetch('https://employee-management-server-liard.vercel.app/tasks')
       .then((response) => response.json())
       .then((data) => {
         setTasks(data)

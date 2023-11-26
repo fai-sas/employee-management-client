@@ -79,7 +79,9 @@ const Route = createBrowserRouter([
           </HrRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/employees/${params.id}`),
+          fetch(
+            `https://employee-management-server-liard.vercel.app/employees/${params.id}`
+          ),
       },
       // Employee only routes
       {

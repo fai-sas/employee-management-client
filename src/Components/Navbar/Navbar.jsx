@@ -20,7 +20,7 @@ const Navbar = () => {
   ].filter(Boolean)
 
   const handleScroll = () => {
-    setIsScrolled(window.scrollY > 100)
+    setIsScrolled(window.scrollY > 0)
   }
 
   useEffect(() => {
