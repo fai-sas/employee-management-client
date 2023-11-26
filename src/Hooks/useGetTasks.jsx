@@ -4,9 +4,12 @@
 
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from './useAxiosSecure'
+import useAuth from './useAuth'
 
 const useGetTasks = () => {
   const axiosSecure = useAxiosSecure()
+  const { user } = useAuth()
+
   const {
     data: tasks = [],
     isPending: loading,
@@ -24,7 +27,7 @@ const useGetTasks = () => {
     },
   })
 
-  return [tasks, loading, refetch]
+  return [tasks.filter((task) => task.userId === user.uid), loading, refetch]
 }
 
 export default useGetTasks
