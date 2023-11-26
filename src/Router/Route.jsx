@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createBrowserRouter } from 'react-router-dom'
-import MainLayout from '../layout/MainLayout'
+import MainLayout from '../Layout/MainLayout'
 import HomePage from '../Pages/HomePage'
 import Register from '../Pages/Register'
 import Login from '../Pages/Login'
@@ -16,6 +16,7 @@ import WorkSheet from '../Pages/Dashboard/WorkSheet'
 import EmployeeRoute from './EmployeeRoute'
 import Progress from '../Pages/Dashboard/Progress'
 import PayNow from '../Pages/Dashboard/PayNow'
+import Contact from '../Pages/Contact'
 
 const Route = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const Route = createBrowserRouter([
       {
         path: '/',
         element: <HomePage />,
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
       },
     ],
   },
