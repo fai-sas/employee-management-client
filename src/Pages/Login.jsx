@@ -5,9 +5,11 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AuthContext } from '../Providers/AuthProvider'
 import { Helmet } from 'react-helmet-async'
+import useAuth from '../Hooks/useAuth'
 
 const Login = () => {
   const { signInUserWithEmail, signInWithGoogle } = useContext(AuthContext)
+  const { user } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 

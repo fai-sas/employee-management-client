@@ -6,23 +6,31 @@ import Swal from 'sweetalert2'
 import TableEmployeeList from '../../Components/Table/HR/TableEmployeeList'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import useGetAllEmployees from '../../Hooks/useGetAllEmployees'
+import { useEffect, useState } from 'react'
 
 const EmployeeList = () => {
   const axiosSecure = useAxiosSecure()
-  const [employees, loading, refetch] = useGetAllEmployees()
+  // const [loading, refetch] = useGetAllEmployees()
+
+  const [employees, setEmployees] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:5000/employees')
+      .then((response) => response.json())
+      .then((data) => setEmployees(data))
+  }, [])
 
   const handleToggleVerification = async (employeeId, isVerified) => {
-    if (loading) return
+    // if (loading) return
 
     try {
-      const response = await axiosSecure.patch(
-        `/users/employees/${employeeId}`,
-        { isVerified: !isVerified }
-      )
+      const response = await axiosSecure.patch(`/employees/${employeeId}`, {
+        isVerified: !isVerified,
+      })
 
       if (response.data.modifiedCount > 0) {
         console.log(response.data)
-        refetch()
+        // refetch()
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -36,13 +44,14 @@ const EmployeeList = () => {
     }
   }
 
-  if (loading) {
-    return <h1>Loading...</h1>
-  }
+  // if (loading) {
+  //   return <h1>Loading...</h1>
+  // }
 
   return (
     <>
       <h1>Get All Users</h1>
+
       <TableEmployeeList
         employees={employees}
         handleToggleVerification={handleToggleVerification}

@@ -14,6 +14,8 @@ import SingleEmployee from '../Pages/Dashboard/SingleEmployee'
 import PaymentHistory from '../Pages/Dashboard/PaymentHistory'
 import WorkSheet from '../Pages/Dashboard/WorkSheet'
 import EmployeeRoute from './EmployeeRoute'
+import Progress from '../Pages/Dashboard/Progress'
+import PayNow from '../Pages/Dashboard/PayNow'
 
 const Route = createBrowserRouter([
   {
@@ -54,6 +56,22 @@ const Route = createBrowserRouter([
         ),
       },
       {
+        path: '/dashboard/pay-now',
+        element: (
+          <HrRoute>
+            <PayNow />
+          </HrRoute>
+        ),
+      },
+      {
+        path: '/dashboard/progress',
+        element: (
+          <HrRoute>
+            <Progress />
+          </HrRoute>
+        ),
+      },
+      {
         path: '/dashboard/employee-list/singleEmployee/:id',
         element: (
           <HrRoute>
@@ -61,7 +79,7 @@ const Route = createBrowserRouter([
           </HrRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/users/employees/${params.id}`),
+          fetch(`http://localhost:5000/employees/${params.id}`),
       },
       // Employee only routes
       {

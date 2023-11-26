@@ -18,10 +18,12 @@ import {
 import { NavLink, Outlet } from 'react-router-dom'
 import useAdmin from '../Hooks/useAdmin'
 import useHR from '../Hooks/useHR'
+import useEmployee from '../Hooks/useEmployee'
 
 const Dashboard = () => {
   const [isAdmin] = useAdmin()
   const [isHR] = useHR()
+  const [isEmployee] = useEmployee()
 
   return (
     <div className='flex'>
@@ -30,34 +32,34 @@ const Dashboard = () => {
         <ul className='p-4 menu'>
           {isAdmin ? (
             <>
-              <li>
+              {/* <li>
                 <NavLink to='/dashboard' className='flex items-center gap-2'>
-                  <FaHome></FaHome>
+                  <FaHome />
                   Admin Home
                 </NavLink>
-              </li>
+              </li> */}
 
               <li>
                 <NavLink
                   to='/dashboard/all-users'
                   className='flex items-center gap-2'
                 >
-                  <FaUsers></FaUsers>
+                  <FaUsers />
                   All Users
                 </NavLink>
               </li>
             </>
           ) : isHR ? (
             <>
-              <li>
+              {/* <li>
                 <NavLink
                   to='/dashboard/hrHome'
                   className='flex items-center gap-2'
                 >
-                  <FaHome></FaHome>
+                  <FaHome />
                   HR Home
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink
                   to='/dashboard/employee-list'
@@ -72,19 +74,19 @@ const Dashboard = () => {
                   to='/dashboard/progress'
                   className='flex items-center gap-2'
                 >
-                  <FaList></FaList>
+                  <FaList />
                   Progress
                 </NavLink>
               </li>
             </>
-          ) : (
+          ) : isEmployee ? (
             <>
               <li>
                 <NavLink
                   to='/dashboard/payment-history'
                   className='flex items-center gap-2'
                 >
-                  <FaList></FaList>
+                  <FaList />
                   Payment History
                 </NavLink>
               </li>
@@ -93,18 +95,17 @@ const Dashboard = () => {
                   to='/dashboard/work-sheet'
                   className='flex items-center gap-2'
                 >
-                  <FaList></FaList>
+                  <FaList />
                   Work Sheet
                 </NavLink>
               </li>
             </>
-          )}
-
+          ) : null}
           {/* shared nav links */}
           <div className='divider'></div>
           <li>
             <NavLink to='/' className='flex items-center gap-2'>
-              <FaHome></FaHome>
+              <FaHome />
               Home
             </NavLink>
           </li>
@@ -112,7 +113,7 @@ const Dashboard = () => {
       </div>
       {/* dashboard content */}
       <div className='flex-1 p-8'>
-        <Outlet></Outlet>
+        <Outlet />
       </div>
     </div>
   )
