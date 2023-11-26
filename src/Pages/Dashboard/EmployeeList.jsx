@@ -50,7 +50,7 @@ const EmployeeList = () => {
 
   return (
     <>
-      <h1>Get All Users</h1>
+      <h1>Employee List</h1>
 
       <TableEmployeeList
         employees={employees}
