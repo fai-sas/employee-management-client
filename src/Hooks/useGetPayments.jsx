@@ -15,7 +15,7 @@ const useGetPayments = () => {
     queryKey: ['payments'],
     queryFn: async () => {
       try {
-        const res = await axiosSecure.get('/payments')
+        const res = await axiosSecure.get(`/payments`)
         return res.data
       } catch (error) {
         console.error(error)

@@ -17,8 +17,8 @@ import {
 import useGetPayments from '../Hooks/useGetPayments'
 import moment from 'moment'
 
-const EmployeeChart = ({ salary }) => {
-  const [payments, loading, refetch] = useGetPayments()
+const EmployeeChart = ({ salary, userId }) => {
+  const [payments, loading, refetch] = useGetPayments(userId)
 
   const data = payments.reduce((accumulator, payment) => {
     const formattedMonth = moment(payment?.month).format('MMM YY')

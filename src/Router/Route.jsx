@@ -17,12 +17,14 @@ import EmployeeRoute from './EmployeeRoute'
 import Progress from '../Pages/Dashboard/Progress'
 import PayNow from '../Pages/Dashboard/PayNow'
 import Contact from '../Pages/Contact'
+import ErrorPage from '../Pages/ErrorPage'
+import DashboardHome from '../Pages/Dashboard/DashboardHome'
 
 const Route = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
@@ -42,6 +44,15 @@ const Route = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: '/dashboard',
+        element: (
+          <PrivateRoute>
+            <DashboardHome />
+          </PrivateRoute>
+        ),
+      },
+
       // admin only routes
       {
         path: '/dashboard/all-users',
@@ -54,6 +65,7 @@ const Route = createBrowserRouter([
       // HR only routes
       {
         path: '/dashboard/employee-list',
+
         element: (
           <HrRoute>
             <EmployeeList />

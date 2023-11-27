@@ -13,7 +13,7 @@ const Navbar = () => {
     { title: 'Dashboard', path: '/dashboard' },
     { title: 'Contact Us', path: '/contact' },
     !user && { title: 'Login', path: '/login' },
-    user && { title: `${user?.displayName}` },
+    // user && { title: `${user?.displayName}` },
   ].filter(Boolean)
 
   return (
