@@ -67,7 +67,9 @@ const TableAdmin = ({ users, handleMakeHR, handleFireEmployee }) => {
                       {/* fire */}
                       <td className='px-6 py-4'>
                         {user.isFired ? (
-                          <span className='text-red-500'>Fired</span>
+                          <span className='p-2 font-semibold text-gray-200 transition-all bg-red-800 rounded-lg hover:text-white shadow-slate-300 dark:shadow-slate-700 hover:shadow-2xl hover:shadow-slate-400 hover:-translate-y-px'>
+                            Fired
+                          </span>
                         ) : (
                           <div className='flex flex-wrap justify-center gap-6'>
                             <button

@@ -1,21 +1,23 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
-
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from './useAxiosSecure'
+import useAuth from './useAuth'
 
-const useGetAllEmployees = () => {
+const useGetEmployees = () => {
   const axiosSecure = useAxiosSecure()
+  const { user } = useAuth()
+
   const {
     data: employees = [],
     isPending: loading,
     refetch,
   } = useQuery({
-    queryKey: ['employees'],
+    queryKey: ['allEmployees'],
     queryFn: async () => {
       try {
-        const res = await axiosSecure.get('/users/employees')
+        const res = await axiosSecure.get('/employees')
         return res.data
       } catch (error) {
         console.error(error)
@@ -27,4 +29,4 @@ const useGetAllEmployees = () => {
   return [employees, loading, refetch]
 }
 
-export default useGetAllEmployees
+export default useGetEmployees

@@ -92,7 +92,7 @@ const TableEmployeeList = ({ employees, handleToggleVerification }) => {
                         <div className='relative w-10 h-10'>
                           <img
                             className='object-cover object-center w-full h-full rounded-full'
-                            src={employee?.displayURL}
+                            src={employee?.photoURL}
                             alt=''
                           />
                           <span className='absolute bottom-0 right-0 w-2 h-2 bg-green-400 rounded-full ring ring-white'></span>
@@ -113,10 +113,14 @@ const TableEmployeeList = ({ employees, handleToggleVerification }) => {
                               employee?.isVerified
                             )
                           }
-                          className={`inline-flex items-center gap-1 px-2 py-1 font-semibold rounded-full 
+                          className={`inline-flex items-center gap-1 px-2 py-1 font-semibold rounded-full  mx-auto
                           }`}
                         >
-                          {employee.isVerified ? <FaCheck /> : <TiDelete />}
+                          {employee.isVerified ? (
+                            <FaCheck className='text-lg font-bold text-green-700 '></FaCheck>
+                          ) : (
+                            <TiDelete className='text-2xl font-bold text-red-700'></TiDelete>
+                          )}
                         </button>
                       </td>
                       <td className='px-6 py-4'>
@@ -126,6 +130,7 @@ const TableEmployeeList = ({ employees, handleToggleVerification }) => {
                       <td className='px-6 py-4'>
                         <Link
                           to={`/dashboard/employee-list/singleEmployee/${employee?._id}`}
+                          className='p-2 text-gray-200 transition-all bg-gray-800 rounded-lg hover:text-white shadow-slate-300 dark:shadow-slate-700 hover:shadow-2xl hover:shadow-slate-400 hover:-translate-y-px '
                         >
                           View Details
                         </Link>
@@ -133,11 +138,27 @@ const TableEmployeeList = ({ employees, handleToggleVerification }) => {
                       <td className='px-6 py-4'>
                         <button
                           onClick={() => handleOpen(employee?._id)}
-                          className='p-2 text-white bg-gray-800 rounded-lg'
+                          className={`p-2 rounded-lg ${
+                            employee?.isVerified
+                              ? 'text-gray-200 bg-gray-800'
+                              : 'text-gray-500 bg-gray-300 cursor-not-allowed'
+                          }`}
                           disabled={!employee?.isVerified}
+                          title={
+                            !employee?.isVerified
+                              ? 'Employee needs to be verified to be paid'
+                              : ''
+                          }
                         >
                           Pay Now
                         </button>
+                        {/* <button
+                          onClick={() => handleOpen(employee?._id)}
+                          className='p-2 text-gray-200 bg-gray-800 rounded-lg'
+                          disabled={!employee?.isVerified}
+                        >
+                          Pay Now
+                        </button> */}
                         {openDialogId === employee?._id && (
                           <Dialog
                             size='xs'
