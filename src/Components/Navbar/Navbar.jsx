@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import AvatarMenu from './AvatarMenu'
 import { Link, NavLink } from 'react-router-dom'
 import useAuth from '../../Hooks/useAuth'
@@ -9,8 +9,6 @@ import useAuth from '../../Hooks/useAuth'
 const Navbar = () => {
   const { user } = useAuth()
   const [state, setState] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-
   const navigation = [
     { title: 'Dashboard', path: '/dashboard' },
     { title: 'Contact Us', path: '/contact' },
@@ -18,29 +16,9 @@ const Navbar = () => {
     user && { title: `${user?.displayName}` },
   ].filter(Boolean)
 
-  const handleScroll = () => {
-    setIsScrolled(window.scrollY > 0)
-  }
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
   return (
-    <header
-      className={`z-50 bg-opacity-80 backdrop-filter backdrop-blur-sm ${
-        isScrolled ? 'sticky top-0 text-white  ' : ''
-      }`}
-    >
-      <div
-        className={`  items-center gap-x-14 px-4 max-w-screen-xl mx-auto lg:flex lg:px-8 lg:static ${
-          state ? 'h-full  inset-x-0' : ''
-        }`}
-      >
+    <header className='sticky top-0 z-50 bg-opacity-80 backdrop-filter backdrop-blur-sm'>
+      <div className='items-center max-w-screen-xl px-4 mx-auto gap-x-14 lg:flex lg:px-8'>
         <div className='flex items-center justify-between py-3 lg:py-5 lg:block'>
           <Link to='/'>
             <img
@@ -95,23 +73,17 @@ const Navbar = () => {
               onSubmit={(e) => e.preventDefault()}
               className='items-center justify-center flex-1 pb-4 lg:flex lg:pb-0'
             ></form>
-            {navigation.map((item, idx) => {
-              return (
-                <li key={idx}>
-                  <NavLink
-                    to={item.path}
-                    className={
-                      isScrolled
-                        ? 'text-gray-500'
-                        : 'block text-gray-700 hover:text-gray-900'
-                    }
-                  >
-                    {item.title}
-                  </NavLink>
-                </li>
-              )
-            })}
-            <AvatarMenu />
+            {navigation.map((item, idx) => (
+              <li key={idx}>
+                <NavLink
+                  to={item.path}
+                  className='block text-gray-700 hover:text-gray-900'
+                >
+                  {item.title}
+                </NavLink>
+              </li>
+            ))}
+            {user && <AvatarMenu />}
           </ul>
         </div>
       </div>

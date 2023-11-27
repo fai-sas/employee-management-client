@@ -1,8 +1,23 @@
-# React + Vite
+# Live Website Link
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+https://employee-management-cf.netlify.app
 
-Currently, two official plugins are available:
+# Website Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+• Users Can Register and Login in the Website Using Email Password
+
+• Users Can Login in the Website via Google
+
+• Users Can Register as HR or Employee
+
+• Admins Can Make any Employee HR
+
+• Admins Can Fire and Employee or HR
+
+• HR Can Verify or Unverify an Employee
+
+• HR Can Pay Any Verified Employee
+
+• Employee Can Pay Add Any Task and View Them
+
+• Employee Can View Their Payment History

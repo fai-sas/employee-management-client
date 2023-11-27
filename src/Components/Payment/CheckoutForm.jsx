@@ -92,7 +92,7 @@ const CheckoutForm = ({ amount, selectedMonth, selectedYear }) => {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Thank you for the taka paisa',
+            title: 'Employee Has Been Successfully Paid',
             showConfirmButton: false,
             timer: 1500,
           })
