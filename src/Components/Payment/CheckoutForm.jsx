@@ -106,6 +106,9 @@ const CheckoutForm = ({
           date: new Date(),
         }
 
+        console.log('Selected Month:', selectedMonth)
+        console.log('Selected Year:', selectedYear)
+
         const res = await axiosSecure.post('/payments', payment)
         console.log('payment saved', res.data)
         // refetch()

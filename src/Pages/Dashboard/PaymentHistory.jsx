@@ -10,10 +10,6 @@ const PaymentHistory = () => {
   const { user } = useAuth()
   const [payments, loading, refetch] = useGetPayments()
 
-  // const specificUserPayments = payments.filter(
-  //   (payment) => payment.employeeId && payment.employeeId === String(user.uid)
-  // )
-
   if (loading) {
     return <h1>Loading...</h1>
   }

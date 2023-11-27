@@ -152,13 +152,7 @@ const TableEmployeeList = ({ employees, handleToggleVerification }) => {
                         >
                           Pay Now
                         </button>
-                        {/* <button
-                          onClick={() => handleOpen(employee?._id)}
-                          className='p-2 text-gray-200 bg-gray-800 rounded-lg'
-                          disabled={!employee?.isVerified}
-                        >
-                          Pay Now
-                        </button> */}
+
                         {openDialogId === employee?._id && (
                           <Dialog
                             size='xs'
@@ -241,8 +235,8 @@ const TableEmployeeList = ({ employees, handleToggleVerification }) => {
                                     employeeId={employee?._id}
                                     employeeName={employee?.name}
                                     amount={employee?.salary}
-                                    month={selectedMonth}
-                                    year={selectedYear}
+                                    selectedMonth={selectedMonth}
+                                    selectedYear={selectedYear}
                                   />
                                 </DialogBody>
                               </CardBody>

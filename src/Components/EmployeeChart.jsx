@@ -17,44 +17,42 @@ import {
 import useGetPayments from '../Hooks/useGetPayments'
 import moment from 'moment'
 
-const EmployeeChart = ({ salary, userId }) => {
+const EmployeeChart = ({ userId }) => {
   const [payments, loading, refetch] = useGetPayments(userId)
 
-  const data = payments.reduce((accumulator, payment) => {
-    const formattedMonth = moment(payment?.month).format('MMM YY')
+  const chartData = payments.reduce((accumulator, pay) => {
+    const formattedMonth =
+      moment(pay.selectedMonth, 'MMMM').format('MMM') + ' ' + pay.selectedYear
 
     const existingMonth = accumulator.find(
       (item) => item.name === formattedMonth
     )
 
-    const salary = Number(payment.amount)
+    const salary = Number(pay.amount)
 
     if (!isNaN(salary)) {
       if (existingMonth) {
-        existingMonth.uv += salary
         existingMonth.salary += salary
       } else {
         accumulator.push({
           name: formattedMonth,
-          uv: salary,
           salary: salary,
         })
       }
     } else {
-      console.error(`Invalid salary for payment:`, payment)
+      console.error(`Invalid salary for payment:`, pay)
     }
 
     return accumulator
   }, [])
-
-  console.log(data)
 
   return (
     <section className='container flex items-center justify-center p-8 mx-auto mt-8'>
       <BarChart
         width={500}
         height={300}
-        data={data}
+        // data={data}
+        data={chartData}
         margin={{
           top: 5,
           right: 30,
