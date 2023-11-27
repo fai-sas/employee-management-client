@@ -5,12 +5,20 @@ import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from './CheckoutForm'
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK)
-const Payment = ({ amount, selectedMonth, selectedYear }) => {
+const Payment = ({
+  amount,
+  employeeName,
+  selectedMonth,
+  employeeId,
+  selectedYear,
+}) => {
   return (
     <div>
       <div>
         <Elements stripe={stripePromise}>
           <CheckoutForm
+            employeeId={employeeId}
+            employeeName={employeeName}
             amount={amount}
             selectedMonth={selectedMonth}
             selectedYear={selectedYear}

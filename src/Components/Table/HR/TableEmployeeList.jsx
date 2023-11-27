@@ -217,6 +217,8 @@ const TableEmployeeList = ({ employees, handleToggleVerification }) => {
                                     </div>
                                   </section>
                                   <Payment
+                                    employeeId={employee?._id}
+                                    employeeName={employee?.name}
                                     amount={employee?.salary}
                                     month={selectedMonth}
                                     year={selectedYear}

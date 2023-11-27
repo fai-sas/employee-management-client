@@ -7,7 +7,13 @@ import useAuth from '../../Hooks/useAuth'
 import Swal from 'sweetalert2'
 import { Button } from '@material-tailwind/react'
 
-const CheckoutForm = ({ amount, selectedMonth, selectedYear }) => {
+const CheckoutForm = ({
+  employeeId,
+  employeeName,
+  amount,
+  selectedMonth,
+  selectedYear,
+}) => {
   const [error, setError] = useState('')
   const [clientSecret, setClientSecret] = useState('')
   const [transactionId, setTransactionId] = useState('')
@@ -21,13 +27,26 @@ const CheckoutForm = ({ amount, selectedMonth, selectedYear }) => {
   useEffect(() => {
     if (salary > 0) {
       axiosSecure
-        .post('/create-payment-intent', { salary, selectedMonth, selectedYear })
+        .post('/create-payment-intent', {
+          salary,
+          employeeId,
+          selectedMonth,
+          selectedYear,
+          employeeName,
+        })
         .then((res) => {
           console.log(res.data.clientSecret)
           setClientSecret(res.data.clientSecret)
         })
     }
-  }, [axiosSecure, salary, selectedMonth, selectedYear])
+  }, [
+    axiosSecure,
+    employeeName,
+    salary,
+    employeeId,
+    selectedMonth,
+    selectedYear,
+  ])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -77,10 +96,12 @@ const CheckoutForm = ({ amount, selectedMonth, selectedYear }) => {
 
         // now save the payment in the database
         const payment = {
+          employeeId,
+          employeeName,
           selectedMonth,
           selectedYear,
           email: user.email,
-          price: amount,
+          amount: amount,
           transactionId: paymentIntent.id,
           date: new Date(),
         }
