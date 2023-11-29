@@ -6,8 +6,11 @@ import Swal from 'sweetalert2'
 import TableAdmin from '../../Components/Table/Admin/TableAdmin'
 import useGetUsers from '../../Hooks/useGetUsers'
 import useAxiosSecure from '../../Hooks/useAxiosSecure'
+import { useState } from 'react'
+import CardAdmin from '../../Components/Table/Admin/CardAdmin'
 
 const AllUsers = () => {
+  const [view, setView] = useState('table')
   const [users, loading, refetch] = useGetUsers()
   const axiosSecure = useAxiosSecure()
 
@@ -75,12 +78,55 @@ const AllUsers = () => {
       <h1 className='py-4 text-3xl font-semibold'>
         List of Verified Employees and HR
       </h1>
-      <div className=''>
-        <TableAdmin
-          users={filteredUsers}
-          handleMakeHR={handleMakeHR}
-          handleFireEmployee={handleFireEmployee}
-        />
+
+      <div className='flex gap-4 transition-opacity '>
+        <button
+          onClick={() => setView('table')}
+          className={`${
+            view === 'table'
+              ? 'bg-gray-800 text-white'
+              : 'bg-gray-300 text-gray-800'
+          } py-2 px-4 rounded-lg transition-all duration-300`}
+        >
+          Table View
+        </button>
+        <button
+          onClick={() => setView('card')}
+          className={`${
+            view === 'card'
+              ? 'bg-gray-800 text-white'
+              : 'bg-gray-300 text-gray-800'
+          } py-2 px-4 rounded-lg transition-all duration-300`}
+        >
+          Card View
+        </button>
+      </div>
+
+      <div
+        className={`transition-opacity ${
+          view === 'card' ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
+        {view === 'table' && (
+          <TableAdmin
+            users={filteredUsers}
+            handleMakeHR={handleMakeHR}
+            handleFireEmployee={handleFireEmployee}
+          />
+        )}
+      </div>
+      <div
+        className={`transition-opacity ${
+          view === 'table' ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
+        {view === 'card' && (
+          <CardAdmin
+            users={filteredUsers}
+            handleMakeHR={handleMakeHR}
+            handleFireEmployee={handleFireEmployee}
+          />
+        )}
       </div>
     </>
   )

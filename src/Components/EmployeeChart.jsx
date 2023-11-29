@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 
-import { PureComponent } from 'react'
+import { useEffect, useState } from 'react'
 import {
   BarChart,
   Bar,
@@ -12,15 +12,24 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
 } from 'recharts'
 import useGetPayments from '../Hooks/useGetPayments'
 import moment from 'moment'
+import { useLoaderData } from 'react-router-dom'
 
-const EmployeeChart = ({ userId }) => {
-  const [payments, loading, refetch] = useGetPayments(userId)
+const EmployeeChart = () => {
+  const { _id, name } = useLoaderData()
+  const [paymentsByUserID, setPaymentsByUserID] = useState([])
+  const [payments] = useGetPayments()
 
-  const chartData = payments.reduce((accumulator, pay) => {
+  useEffect(() => {
+    const uniqueProducts = payments.filter(
+      (product) => product.employeeId === _id
+    )
+    setPaymentsByUserID(uniqueProducts)
+  }, [_id, payments])
+
+  const chartData = paymentsByUserID.reduce((accumulator, pay) => {
     const formattedMonth =
       moment(pay.selectedMonth, 'MMMM').format('MMM') + ' ' + pay.selectedYear
 
@@ -28,15 +37,15 @@ const EmployeeChart = ({ userId }) => {
       (item) => item.name === formattedMonth
     )
 
-    const salary = Number(pay.amount)
+    const Salary = Number(pay.amount)
 
-    if (!isNaN(salary)) {
+    if (!isNaN(Salary)) {
       if (existingMonth) {
-        existingMonth.salary += salary
+        existingMonth.salary += Salary
       } else {
         accumulator.push({
           name: formattedMonth,
-          salary: salary,
+          Salary: Salary,
         })
       }
     } else {
@@ -48,30 +57,33 @@ const EmployeeChart = ({ userId }) => {
 
   return (
     <section className='container flex items-center justify-center p-8 mx-auto mt-8'>
-      <BarChart
-        width={500}
-        height={300}
-        // data={data}
-        data={chartData}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray='3 3' />
-        <XAxis dataKey='name' />
-        <YAxis />
-        <Tooltip />
-        <Legend />
+      {paymentsByUserID.length ? (
+        <BarChart
+          width={500}
+          height={300}
+          data={chartData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='name' />
+          <YAxis />
+          <Tooltip />
+          <Legend />
 
-        <Bar
-          dataKey='salary'
-          fill='#82ca9d'
-          activeBar={<Rectangle fill='gold' stroke='purple' />}
-        />
-      </BarChart>
+          <Bar
+            dataKey='Salary'
+            fill='#82ca9d'
+            activeBar={<Rectangle fill='gold' stroke='purple' />}
+          />
+        </BarChart>
+      ) : (
+        <h1 className='text-3xl font-bold'>No Payment Found For {name}</h1>
+      )}
     </section>
   )
 }

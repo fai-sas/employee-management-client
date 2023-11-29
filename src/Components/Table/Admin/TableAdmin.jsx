@@ -41,7 +41,8 @@ const TableAdmin = ({ users, handleMakeHR, handleFireEmployee }) => {
                       </td>
 
                       <td className='px-6 py-4'>
-                        {user.role === 'employee' ? (
+                        {/* Make HR Button */}
+                        {!user.isFired && user.role === 'employee' && (
                           <div className='flex flex-wrap justify-center gap-6'>
                             <button
                               onClick={() =>
@@ -59,9 +60,21 @@ const TableAdmin = ({ users, handleMakeHR, handleFireEmployee }) => {
                               </span>
                             </button>
                           </div>
-                        ) : user.role === 'hr' ? (
-                          <span className='text-gray-500'>The User is HR</span>
-                        ) : null}
+                        )}
+
+                        {/* HR Status */}
+                        {user.role === 'hr' && !user.isFired && (
+                          <span className='px-4 py-2 text-gray-200 bg-gray-800 rounded-xl'>
+                            The User is HR
+                          </span>
+                        )}
+
+                        {/* Fired Status */}
+                        {user.isFired && (
+                          <span className='px-4 py-2 font-bold text-red-600'>
+                            The Employee is Fired
+                          </span>
+                        )}
                       </td>
 
                       {/* fire */}
@@ -84,17 +97,6 @@ const TableAdmin = ({ users, handleMakeHR, handleFireEmployee }) => {
                           </div>
                         )}
                       </td>
-
-                      {/* <td className='px-6 py-4'>
-                        <div className='flex flex-wrap justify-center gap-6'>
-                          <button className='relative' href='#'>
-                            <span className='absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-black rounded'></span>
-                            <span className='relative inline-block w-full h-full px-3 py-1 text-base font-bold text-gray-700 transition duration-100 bg-red-400 border-2 border-black rounded fold-bold hover:bg-yellow-400 hover:text-gray-900 dark:bg-transparent'>
-                              Fire
-                            </span>
-                          </button>
-                        </div>
-                      </td> */}
                     </tr>
                   </tbody>
                 </>

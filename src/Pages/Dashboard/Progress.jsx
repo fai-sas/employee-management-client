@@ -40,11 +40,22 @@ const Progress = () => {
       (!selectedMonth || moment(task.date).format('MMMM') === selectedMonth)
   )
 
+  const totalHoursWorked = filteredTasks.reduce(
+    (total, task) => total + (parseFloat(task.hoursWorked) || 0),
+    0
+  )
+
   return (
     <>
       <article className='flex gap-4 py-4 mx-8 text-2xl font-bold'>
         <h1>Progress Report</h1>
       </article>
+
+      <div className='mb-4 text-center'>
+        <p className='text-xl font-bold'>
+          Total Hours Worked: {totalHoursWorked} hours
+        </p>
+      </div>
 
       <section className='flex gap-4 py-4 mx-8 bg-white rounded-lg '>
         {/* Select for Names */}
@@ -90,9 +101,9 @@ const Progress = () => {
 
       <div className='m-5 overflow-hidden border border-gray-200 rounded-lg shadow-md'>
         {filteredTasks.length > 0 ? (
-          <table className='w-full text-sm text-left text-gray-500 bg-white border-collapse'>
+          <table className='w-full text-sm text-left text-gray-800 bg-white border-collapse lg:text-lg'>
             {/* ... (table header) */}
-            <thead className='text-center bg-gray-50'>
+            <thead className='font-bold text-center bg-gray-200 shadow-md'>
               <tr>
                 <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
                   Name
