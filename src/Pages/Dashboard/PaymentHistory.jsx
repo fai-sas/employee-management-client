@@ -18,8 +18,26 @@ const PaymentHistory = () => {
     const uniquePayments = payments.filter(
       (product) => product.employeeName === userName
     )
-    setPaymentsByUserID(uniquePayments)
+
+    // Sort payments by the combined value of selectedYear and selectedMonth
+    const sortedPayments = uniquePayments.sort((a, b) => {
+      const dateA = moment(
+        `${a.selectedYear}-${getMonthNumber(a.selectedMonth)}`,
+        'YYYY-MM'
+      )
+      const dateB = moment(
+        `${b.selectedYear}-${getMonthNumber(b.selectedMonth)}`,
+        'YYYY-MM'
+      )
+      return dateB - dateA
+    })
+
+    setPaymentsByUserID(sortedPayments)
   }, [payments, userName])
+
+  const getMonthNumber = (month) => {
+    return moment().month(month).format('MM')
+  }
 
   if (loading) {
     return <h1>Loading...</h1>
@@ -66,8 +84,7 @@ const PaymentHistory = () => {
                   >
                     <tr className='hover:bg-gray-50'>
                       <td className='px-6 py-4 capitalize'>
-                        {/* {moment(payment?.selectedMonth).format('MMMM')} */}
-                        {payment?.selectedMonth} {payment?.selectedYear}
+                        {`${payment?.selectedMonth} ${payment?.selectedYear}`}
                       </td>
                       <td className='px-6 py-4 capitalize'>
                         {payment?.amount}
