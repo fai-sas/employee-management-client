@@ -6,6 +6,7 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure'
 import useAuth from '../../Hooks/useAuth'
 import Swal from 'sweetalert2'
 import { Button } from '@material-tailwind/react'
+import axios from 'axios' // Import axios for HTTP requests
 
 const CheckoutForm = ({
   employeeId,
@@ -17,12 +18,28 @@ const CheckoutForm = ({
   const [error, setError] = useState('')
   const [clientSecret, setClientSecret] = useState('')
   const [transactionId, setTransactionId] = useState('')
+  const [paymentMade, setPaymentMade] = useState(false)
   const stripe = useStripe()
   const elements = useElements()
   const axiosSecure = useAxiosSecure()
   const { user } = useAuth()
 
   const salary = parseFloat(amount)
+
+  useEffect(() => {
+    const checkPaymentStatus = async () => {
+      try {
+        const response = await axiosSecure.get(
+          `/payments/check/${selectedMonth}/${selectedYear}`
+        )
+        setPaymentMade(response.data.paymentMade)
+      } catch (error) {
+        console.error('Error checking payment status', error)
+      }
+    }
+
+    checkPaymentStatus()
+  }, [axiosSecure, selectedMonth, selectedYear])
 
   useEffect(() => {
     if (salary > 0) {
@@ -94,7 +111,7 @@ const CheckoutForm = ({
         console.log('transaction id', paymentIntent.id)
         setTransactionId(paymentIntent.id)
 
-        // now save the payment in the database
+        // save payment in database
         const payment = {
           employeeId,
           employeeName,
@@ -111,7 +128,6 @@ const CheckoutForm = ({
 
         const res = await axiosSecure.post('/payments', payment)
         console.log('payment saved', res.data)
-        // refetch()
         if (res.data?.paymentResult?.insertedId) {
           Swal.fire({
             position: 'top-end',
@@ -147,17 +163,15 @@ const CheckoutForm = ({
         className='my-4'
         ripple={true}
         type='submit'
-        disabled={!stripe || !clientSecret}
+        disabled={!stripe || !clientSecret || paymentMade}
       >
         Pay Now
       </Button>
-      {/* <button
-        className='my-4 btn btn-sm btn-primary'
-        type='submit'
-        disabled={!stripe || !clientSecret}
-      >
-        Pay Now
-      </button> */}
+      {paymentMade && (
+        <p className='text-red-600'>
+          Payment already made for the selected month and year.
+        </p>
+      )}
       <p className='text-red-600'>{error}</p>
       {transactionId && (
         <p className='text-green-600'> Your transaction id: {transactionId}</p>

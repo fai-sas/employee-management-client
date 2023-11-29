@@ -66,7 +66,8 @@ const PaymentHistory = () => {
                   >
                     <tr className='hover:bg-gray-50'>
                       <td className='px-6 py-4 capitalize'>
-                        {moment(payment?.date).format('MMMM')}
+                        {/* {moment(payment?.selectedMonth).format('MMMM')} */}
+                        {payment?.selectedMonth} {payment?.selectedYear}
                       </td>
                       <td className='px-6 py-4 capitalize'>
                         {payment?.amount}
