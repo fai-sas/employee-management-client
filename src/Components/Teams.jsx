@@ -1,7 +1,11 @@
 const Teams = () => {
   return (
     <>
-      <div className='py-20'>
+      <div
+        className='py-20 overflow-hidden'
+        data-aos='fade-left'
+        data-aos-duration='1000'
+      >
         <div className='px-6 mx-auto xl:container md:px-12'>
           <div className='mb-16 md:w-2/3 lg:w-1/2'>
             <h2 className='mb-4 text-2xl font-bold text-gray-800 dark:text-white md:text-4xl'>

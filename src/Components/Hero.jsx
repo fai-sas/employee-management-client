@@ -13,7 +13,11 @@ const Hero = () => {
           <div className='absolute inset-0 bg-black opacity-50'></div>
         </div>
 
-        <div className='relative z-10 flex flex-col items-center justify-center h-full text-center'>
+        <div
+          data-aos='fade-up'
+          data-aos-duration='1000'
+          className='relative z-10 flex flex-col items-center justify-center h-full overflow-hidden text-center'
+        >
           <h1 className='mb-4 text-3xl font-bold leading-tight'>
             Streamline Your Workforce with Effortless Employee Management
           </h1>

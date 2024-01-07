@@ -10,13 +10,13 @@ const HomePage = () => {
     window.scrollTo(0, 0)
   }, [])
   return (
-    <>
+    <div className='overflow-hidden'>
       <Hero />
       <Services />
       <Testimonial />
       <CTA />
       <Teams />
-    </>
+    </div>
   )
 }
 

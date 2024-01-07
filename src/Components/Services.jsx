@@ -4,7 +4,11 @@ const Services = () => {
       <h1 className='mt-16 text-3xl font-bold text-center '>
         Empowering Your Workforce: Our Comprehensive Services
       </h1>
-      <div className='flex flex-wrap p-8 mx-4 my-8 lg:p-16'>
+      <div
+        data-aos='fade-right'
+        data-aos-duration='1000'
+        className='flex flex-wrap p-8 mx-4 my-8 overflow-hidden lg:p-16'
+      >
         <div className='w-full px-4 md:w-1/2 lg:w-1/3'>
           <div className='py-8 transition-all shadow-md mb-9 rounded-xl px-7 hover:shadow-lg sm:p-9 lg:px-6 xl:px-9'>
             <div className='inline-block mx-auto mb-7'>
