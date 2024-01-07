@@ -13,13 +13,11 @@ const TableTasks = ({ tasks }) => {
 
   return (
     <>
-      <h1>Task Table</h1>
-
       <div className='m-5 overflow-hidden border border-gray-200 rounded-lg shadow-md'>
         <>
           <table className='w-full text-sm text-left text-gray-500 bg-white border-collapse'>
             <thead className='text-center bg-gray-50'>
-              <tr>
+              <tr className='text-lg font-extrabold '>
                 <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
                   Name
                 </th>

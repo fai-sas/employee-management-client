@@ -9,7 +9,7 @@ const TableAdmin = ({ users, handleMakeHR, handleFireEmployee }) => {
         <>
           <table className='w-full text-sm text-left text-gray-500 bg-white border-collapse'>
             <thead className='text-center bg-gray-50'>
-              <tr>
+              <tr className='text-lg font-extrabold'>
                 <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
                   Name
                 </th>

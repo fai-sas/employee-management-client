@@ -104,7 +104,7 @@ const Progress = () => {
           <table className='w-full text-sm text-left text-gray-800 bg-white border-collapse lg:text-lg'>
             {/* ... (table header) */}
             <thead className='font-bold text-center bg-gray-200 shadow-md'>
-              <tr>
+              <tr className='text-lg font-extrabold'>
                 <th scope='col' className='px-6 py-4 font-medium text-gray-900'>
                   Name
                 </th>

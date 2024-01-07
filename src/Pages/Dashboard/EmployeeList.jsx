@@ -49,7 +49,9 @@ const EmployeeList = () => {
 
   return (
     <>
-      <h1>Employee List</h1>
+      <article className='flex gap-4 py-4 mx-8 text-2xl font-bold'>
+        <h1>Employee List</h1>
+      </article>
 
       <TableEmployeeList
         employees={employees}

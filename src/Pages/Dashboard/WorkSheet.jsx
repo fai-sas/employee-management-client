@@ -11,6 +11,7 @@ import useGetTasks from '../../Hooks/useGetTasks'
 
 const WorkSheet = () => {
   const { user } = useAuth()
+  const userName = user?.displayName
   const axiosSecure = useAxiosSecure()
   const [tasks, loading, refetch] = useGetTasks()
 
@@ -54,7 +55,9 @@ const WorkSheet = () => {
 
   return (
     <>
-      <h1>Work Sheet</h1>
+      <article className='flex gap-4 py-4 text-2xl font-bold'>
+        <h1>Work Sheet of {userName}</h1>
+      </article>
 
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
         <section className='flex gap-4 py-4 bg-white rounded-lg '>
